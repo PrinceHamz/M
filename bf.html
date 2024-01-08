@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <title>Mobile Legends Heroes</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #1a1a1a;
+        }
+        .header {
+            background-color: #1a1a1a;
+            color: #f8b62b;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .nav {
+            background-color: #1a1a1a;
+            color: #fff;
+            overflow: hidden;
+            padding: 10px 0;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 14px 16px;
+            float: left;
+        }
+        .nav a:hover {
+            background-color: #f8b62b;
+            color: #000;
+        }
+        .battlefield {
+            background-image: url('image/map.jpg');
+            background-size: cover;
+            height: 500px;
+            text-align: center;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+        }
+        .battlefield h2, .battlefield p {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }
+        .battlefield video {
+            max-width: 70%; /* make sure the video doesn't overflow its container */
+            display: block; /* necessary for applying margin auto */
+            margin: 0 auto; /* center the video horizontally */
+       margin-top: auto;
+       margin-bottom: auto;
+        }
+        .video-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* align items to the start of the container */
+            align-items: center;
+            height: 100%;
+        }
+
+        .video-text {
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            position: absolute; /* position the text absolutely within the container */
+            top: 0; /* position the text at the top of the container */
+            width: 100%; /* make the text span the full width of the container */
+        }
+        .footer {
+            background-color: #1a1a1a;
+            color: #f8b62b;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Mobile Legends</h1>
+        <h2 id="greeting"></h2>
+        <h3 id="clock"></h3>
+    </div>
+    <div class="nav" id="navbar">
+        <a href="index.html">Home</a>
+        <a href="hero.html">Heroes</a>
+        <a href="bf.html">Battlefield</a>
+        <a href="mode.html">Game Modes</a>
+    </div>
+    <div class="battlefield">
+        <div class="video-container">
+            <video controls autoplay muted>
+                <source src="Night of Whimsical Fun _ Cici _ New Hero Cinematic Trailer _ Mobile Legends_ Bang Bang.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p id="scrolling-text" class="video-text">Experience the thrill of the fight!</p>
+        </div>
+    </div>
+    <div class="footer">
+        Copyright © 2023 Mobile Legends. All rights reserved.
+    </div>
+    <script>
+        const text = document.getElementById('scrolling-text');
+        let charIndex = 0;
+
+        function animateText() {
+            if (charIndex < text.textContent.length) {
+                text.textContent = text.textContent.slice(1) + text.textContent.charAt(0);
+                charIndex++;
+            } else {
+                charIndex = 0;
+            }
+        }
+
+        setInterval(animateText, 200);
+
+        const greeting = document.getElementById('greeting');
+        const clock = document.getElementById('clock');
+
+        function updateClockAndGreeting() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+
+            clock.textContent = `${hours}:${minutes}:${seconds}`;
+
+            if (hours < 12) {
+                 greeting.textContent = 'Good Morning, Welcome to the Battlefield!';
+             } else if (hours < 18) {
+                 greeting.textContent = 'Good Afternoon, Welcome to the Battlefield!';
+             } else {
+                 greeting.textContent = 'Good Evening, Welcome to the Battlefield!';
+             }
+         }
+
+         setInterval(updateClockAndGreeting, 1000);
+         const navbar = document.getElementById('navbar');
+
+    function animateNavbar() {
+        if (window.scrollY > 50) {
+            navbar.style.padding = '10px 0';
+            navbar.style.backgroundColor = '#f8b62b';
+        } else {
+            navbar.style.padding = '20px 0';
+            navbar.style.backgroundColor = '#1a1a1a';
+        }
+    }
+
+    window.addEventListener('scroll', animateNavbar);
+    // Get the video element
+    const video = document.querySelector('video');
+
+    // Add an event listener for the 'ended' event
+    video.addEventListener('ended', function() {
+        // Replay the video
+        this.currentTime = 0;
+        this.play();
+    });
+    </script>
+</body>
+</html>
